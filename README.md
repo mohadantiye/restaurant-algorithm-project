@@ -1,5 +1,5 @@
 # Restaurant Algorithm Project
-## Student: mohantiye
+## Student: muhammad dantiye nasir
 ## Course: Algorithms - Fall 2025
 
 ### Project Part: Menu Search Algorithms
