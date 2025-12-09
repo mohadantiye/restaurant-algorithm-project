@@ -1,5 +1,6 @@
 # Restaurant Algorithm Project
 ## Student: muhammad dantiye nasir
+## student sipho c zulu
 ## Course: Algorithms - Fall 2025
 
 ### Project Part: Menu Search Algorithms
