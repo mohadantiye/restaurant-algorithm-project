@@ -1,5 +1,5 @@
-// RestaurantSystem.java
-// Main restaurant system interface
+cat > src/RestaurantSystem.java << 'END'
+// RestaurantSystem.java - Fixed version
 // Student: mohantiye
 
 import java.util.Scanner;
@@ -70,17 +70,30 @@ public class RestaurantSystem {
             System.out.println("Not found");
         }
         
-        // Binary Search
+        // Binary Search - FIXED
         System.out.println("\n--- Binary Search ---");
-        String[] sorted = menuItems.clone();
+        String[] sorted = new String[menuItems.length];
+        for (int i = 0; i < menuItems.length; i++) {
+            sorted[i] = menuItems[i].toLowerCase();
+        }
         java.util.Arrays.sort(sorted);
         
         start = System.nanoTime();
-        int binaryResult = java.util.Arrays.binarySearch(sorted, target);
+        int binaryResult = java.util.Arrays.binarySearch(sorted, target.toLowerCase());
         long binaryTime = System.nanoTime() - start;
         
         if (binaryResult >= 0) {
-            System.out.printf("Found in %d ns\n", binaryTime);
+            String foundItem = "";
+            double price = 0;
+            for (int i = 0; i < menuItems.length; i++) {
+                if (menuItems[i].equalsIgnoreCase(target)) {
+                    foundItem = menuItems[i];
+                    price = menuPrices[i];
+                    break;
+                }
+            }
+            System.out.printf("Found: %s ($%.2f) in %d ns\n", foundItem, price, binaryTime);
+            
             if (linearResult != -1) {
                 System.out.printf("Binary Search was %.1fx faster\n", 
                     (double)linearTime / binaryTime);
@@ -97,18 +110,20 @@ public class RestaurantSystem {
         
         for (int size : sizes) {
             int[] arr = new int[size];
-            for (int i = 0; i < size; i++) arr[i] = i;
+            for (int i = 0; i < size; i++) arr[i] = i * 10;
             
             long start = System.nanoTime();
-            SearchAlgorithms.linearSearch(arr, size/2);
+            SearchAlgorithms.linearSearch(arr, size/2 * 10);
             long linearTime = System.nanoTime() - start;
             
             start = System.nanoTime();
-            SearchAlgorithms.binarySearch(arr, size/2);
+            SearchAlgorithms.binarySearch(arr, size/2 * 10);
             long binaryTime = System.nanoTime() - start;
             
             System.out.printf("n=%d: Linear=%dns, Binary=%dns (%.1fx faster)\n",
-                size, linearTime, binaryTime, (double)linearTime/binaryTime);
+                size, linearTime, binaryTime, (double)linearTime/Math.max(binaryTime, 1));
         }
+        System.out.println("\nThis shows O(n) vs O(log n) scaling!");
     }
 }
+END
